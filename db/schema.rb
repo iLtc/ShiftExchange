@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180316225059) do
+ActiveRecord::Schema.define(version: 20180316225433) do
 
   create_table "key_values", force: :cascade do |t|
     t.string "key"
@@ -28,6 +28,19 @@ ActiveRecord::Schema.define(version: 20180316225059) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_login_credentials_on_user_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string "name"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "shifts", force: :cascade do |t|
