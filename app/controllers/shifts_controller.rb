@@ -1,4 +1,6 @@
 class ShiftsController < ApplicationController
+  before_action :load_current_user
+
   def new
     @available_places = get_places
   end
