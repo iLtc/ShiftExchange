@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180316225433) do
+ActiveRecord::Schema.define(version: 20180317225835) do
 
   create_table "key_values", force: :cascade do |t|
     t.string "key"
@@ -41,6 +41,13 @@ ActiveRecord::Schema.define(version: 20180316225433) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+    t.index ["role_id"], name: "index_roles_users_on_role_id"
+    t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
   create_table "shifts", force: :cascade do |t|
