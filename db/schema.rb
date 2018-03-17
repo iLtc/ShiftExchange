@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180317231046) do
+ActiveRecord::Schema.define(version: 20180317231603) do
 
   create_table "key_values", force: :cascade do |t|
     t.string "key"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(version: 20180317231046) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "permissions_roles", id: false, force: :cascade do |t|
+    t.integer "permission_id"
+    t.integer "role_id"
+    t.index ["permission_id"], name: "index_permissions_roles_on_permission_id"
+    t.index ["role_id"], name: "index_permissions_roles_on_role_id"
   end
 
   create_table "roles", force: :cascade do |t|
