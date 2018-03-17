@@ -1,0 +1,51 @@
+<% content_for :controller_content do %>
+  <!-- Static navbar -->
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">I Hava a Banana</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li <%if params[:action]=='index'%>class="active"<%end%>><a href="<%=shifts_path%>">All Shifts</a></li>
+          <li <%if params[:action]=='new' || params[:action]=='create' %>class="active"<%end%>><a href="<%=new_shift_path%>">Post Shift</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <% if @current_user.nil? %>
+            <li><a href="<%=new_session_path%>">Sign In</a></li>
+          <% else %>
+            <li class="dropdown">
+              <a id="user-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <%= @current_user.show_name %> <span class="badge"><%= @current_user.credits %></span> <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="<%=sessions_path%>/destroy" data-method="delete">Sign Out</a></li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+  <div class="container">
+    <% if flash[:notice] %>
+      <div class="alert alert-info" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="alert alert-danger" role="alert"><%= flash[:alert] %></div>
+    <% end %>
+    <%= yield %>
+  </div>
+<% end %>
+<%= render template: "layouts/application" %>
