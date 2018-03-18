@@ -2,43 +2,38 @@ class ShiftsController < ApplicationController
   before_action :load_current_user
 
   def new
-    @available_places = get_places
+    @available_locations = list_locations
   end
 
   def create
     flash[:alert] = nil
-    @available_places = get_places
+    @available_locations = list_locations
 
     date = check_date params[:date]
-    return if date.nil?
+    return render_error('Date should not be empty!') if date.nil?
     # TODO: Check if date in range
 
-    start_time = check_time "#{date} #{params[:startTime]}"
-    return if start_time.nil?
+    start_time = check_time "#{date} #{params[:start]}"
+    return render_error('Start Time should not be empty!') if start_time.nil?
 
-    end_time = check_time "#{date} #{params[:endTime]}"
-    return if end_time.nil?
+    end_time = check_time "#{date} #{params[:end]}"
+    return render_error('End Time should not be empty!') if end_time.nil?
 
     # TODO: Check if time in range
 
-    if start_time >= end_time
-      flash[:alert] = 'Error: Start Time should not later than End Time'
-      render 'new'
-      return
-    end
+    return render_error('Start Time should not later than End Time!') if start_time >= end_time
 
-    place = check_place params[:place]
-    return if place.nil?
+    location = check_location params[:location]
+    return if !location
 
     result = check_permission start_time
     if params[:further].nil? && !result
-      render 'new'
-      return
+      return render_error(@further_info)
     end
 
     shift = Shift.new
-    shift.start_time = start_time
-    shift.end_time = end_time
+    shift.start = start_time
+    shift.end = end_time
     shift.from = @current_user
 
     shift.status = if result
@@ -65,12 +60,19 @@ class ShiftsController < ApplicationController
     @current_user = User.find session[:uid]
   end
 
-  def get_places
+  def list_locations
     places = []
-    KeyValue.where(key_type: 'places').each do |place|
+    KeyValue.where(key_type: 'locations').each do |place|
       places << place.value
     end
     places.join(';')
+  end
+
+  def render_error(msg, type=:alert)
+    flash[type] = msg
+    render 'new'
+
+    false
   end
 
   def check_date(date)
@@ -87,14 +89,10 @@ class ShiftsController < ApplicationController
     render 'new'
   end
 
-  def check_place(place)
-    key_value = KeyValue.find_by key_type: 'places', value: place
+  def check_location(place)
+    key_value = KeyValue.find_by key_type: 'locations', value: place
 
-    if key_value.nil?
-      flash[:alert] = 'Error: Place Not Found'
-      render 'new'
-      return
-    end
+    return render_error('Location not found!') if key_value.nil?
 
     key_value.key
   end

@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :place, "Place", class: "col-sm-3 control-label" %>
+      <%= label_tag :location, "Location", class: "col-sm-3 control-label" %>
       <div class="col-sm-6">
         <%= text_field_tag :location, params['location'], class: "form-control", required: true %>
       </div>
@@ -70,4 +70,4 @@
     </div>
   </div>
 <% end %>
-<input type="hidden" id="available-places" value="<%= @available_places %>">
+<input type="hidden" id="available-locations" value="<%= @available_locations %>">

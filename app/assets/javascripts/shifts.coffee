@@ -19,9 +19,9 @@ window.shiftsNew = () ->
     dropdown: false
   }
 
-  availablePlaces = $("#available-places").val().split(";")
-  $("#place").autocomplete {
-    source: availablePlaces
+  availableLocations = $("#available-locations").val().split(";")
+  $("#location").autocomplete {
+    source: availableLocations
   }
 
 window.shiftsCreate = () ->
