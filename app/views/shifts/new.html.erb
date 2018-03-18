@@ -8,21 +8,38 @@
       </div>
     </div>
     <div class="form-group">
+      <%= label_tag :period, "Period", class: "col-sm-3 control-label" %>
+      <div class="col-sm-6">
+        <label class="radio-inline">
+          <%= radio_button_tag(:period, 'breakfast', true) %> Breakfast
+        </label>
+        <label class="radio-inline">
+          <%= radio_button_tag(:period, 'lunch') %> Lunch
+        </label>
+        <label class="radio-inline">
+          <%= radio_button_tag(:period, 'afternoon') %> Afternoon
+        </label>
+        <label class="radio-inline">
+          <%= radio_button_tag(:period, 'dinner') %> Dinner
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
       <%= label_tag :startTime, "Start Time", class: "col-sm-3 control-label" %>
       <div class="col-sm-6">
-        <%= text_field_tag :startTime, params['startTime'], class: "form-control", placeholder: "HH:MM AM/PM", required: true %>
+        <%= text_field_tag :start, params['start'], class: "form-control", placeholder: "HH:MM AM/PM", required: true %>
       </div>
     </div>
     <div class="form-group">
       <%= label_tag :endTime, "End Time", class: "col-sm-3 control-label" %>
       <div class="col-sm-6">
-        <%= text_field_tag :endTime, params['endTime'], class: "form-control", placeholder: "HH:MM AM/PM", required: true %>
+        <%= text_field_tag :end, params['end'], class: "form-control", placeholder: "HH:MM AM/PM", required: true %>
       </div>
     </div>
     <div class="form-group">
       <%= label_tag :place, "Place", class: "col-sm-3 control-label" %>
       <div class="col-sm-6">
-        <%= text_field_tag :place, params['place'], class: "form-control", required: true %>
+        <%= text_field_tag :location, params['location'], class: "form-control", required: true %>
       </div>
     </div>
   <% end %>
