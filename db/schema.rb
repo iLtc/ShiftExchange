@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318041958) do
+ActiveRecord::Schema.define(version: 20180318041957) do
 
   create_table "key_values", force: :cascade do |t|
     t.string "key"
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(version: 20180318041958) do
     t.datetime "updated_at", null: false
     t.date "date"
     t.string "period"
-    t.time "start"
-    t.time "end"
+    t.string "end"
+    t.string "start"
   end
 
   create_table "users", force: :cascade do |t|
