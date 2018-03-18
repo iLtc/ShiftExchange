@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
     session[:state] = state
 
-    @demo_login_url = sessions_path + '/callback/demo?state=' + state
+    @demo_login_url = sessions_path + '/callback/Demo?state=' + state
   end
 
   def callback
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
 
     session.delete :state
 
-    if params[:platform] == 'demo'
+    if params[:platform] == 'Demo'
       # TODO: Remove Demo Users in the future
       uid = demo_callback
     else
@@ -53,8 +53,19 @@ class SessionsController < ApplicationController
 
   # TODO: Remove Demo Users in the future
   def demo_callback
-    return 'SeO9xAuLuRrJgpiFJ9k0LdF7T_cFm5IZ' if params['manager'] == '1'
+    if params[:user] == '1'
+      user = Role.where(title: 'Student').first.users.first
+      return user.login_credentials.first.credential
+    end
 
-    'N8dg0KM5U_l3kAr7JkEegC8zxqanqRbo'
+    if params[:user] == '2'
+      user = Role.where(title: 'Student').first.users.second
+      return user.login_credentials.first.credential
+    end
+
+    if params[:manager] == '1'
+      user = Role.where(title: 'Manager').first.users.first
+      return user.login_credentials.first.credential
+    end
   end
 end
