@@ -28,21 +28,25 @@ class ShiftsController < ApplicationController
 
     date = check_date params[:date]
     return unless date
+
     # TODO: Check if date in range
 
     unless allowed_period.include? params[:period]
       return render_error('Period is unknown!')
     end
 
-    start_time = check_time "#{date} #{params[:start]}"
-    return render_error('Start Time should not be empty!') if start_time.nil?
+    start_time = check_time params[:date], params[:start]
+    return unless start_time
 
-    end_time = check_time "#{date} #{params[:end]}"
-    return render_error('End Time should not be empty!') if end_time.nil?
+    end_time = check_time params[:date], params[:end]
+    return unless end_time
 
     # TODO: Check if time in range
 
-    return render_error('Start Time should not later than End Time!') if start_time >= end_time
+    if start_time >= end_time
+      return render_error('Start Time should not later than End Time!')
+    end
+
 
     location = check_location params[:location]
     return if !location
@@ -102,10 +106,10 @@ class ShiftsController < ApplicationController
     render_error('Error: ' + error.message)
   end
 
-  def check_time(time)
-    Time.zone.parse time
-  rescue => error
-    render_error('Error: ' + error.message)
+  def check_time(date, time)
+    Time.strptime("#{date} #{time}", '%m/%d/%Y %I:%M %P')
+  rescue
+    render_error('Error: invalid time')
   end
 
   def check_location(place)
