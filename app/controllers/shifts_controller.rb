@@ -1,5 +1,6 @@
 class ShiftsController < ApplicationController
   before_action :load_current_user
+  # skip_before_action :verify_authenticity_token
 
   def new
     @available_locations = list_locations
@@ -9,8 +10,10 @@ class ShiftsController < ApplicationController
     flash[:alert] = nil
     @available_locations = list_locations
 
+    return render_error('Date should not be empty!') if params[:date].nil?
+
     date = check_date params[:date]
-    return render_error('Date should not be empty!') if date.nil?
+    return unless date
     # TODO: Check if date in range
 
     start_time = check_time "#{date} #{params[:start]}"
@@ -76,10 +79,9 @@ class ShiftsController < ApplicationController
   end
 
   def check_date(date)
-    return Date.strptime(date, '%m/%d/%Y')
+    Date.strptime(date, '%m/%d/%Y')
   rescue => error
-    flash[:alert] = 'Error: ' + error.message
-    render 'new'
+    render_error('Error: ' + error.message)
   end
 
   def check_time(time)
