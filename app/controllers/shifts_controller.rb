@@ -100,7 +100,13 @@ class ShiftsController < ApplicationController
   end
 
   def check_date(date)
-    Date.strptime(date, '%m/%d/%Y')
+    date = Date.strptime(date, '%m/%d/%Y')
+
+    if date <= Date.today
+      return render_error('Date should be in the future!')
+    end
+
+    date
   rescue => error
     render_error('Error: ' + error.message)
   end
