@@ -10,7 +10,17 @@ class ShiftsController < ApplicationController
     flash[:alert] = nil
     @available_locations = list_locations
 
-    return render_error('Date should not be empty!') if params[:date].nil?
+    required_params = {
+      date: 'Date',
+      period: 'Period',
+      start: 'Start Time',
+      end: 'End Time',
+      location: 'Location'
+    }
+
+    required_params.keys.each do |key|
+      return render_error(required_params[key] + ' should not be empty!') if params[key].nil?
+    end
 
     date = check_date params[:date]
     return unless date
@@ -85,10 +95,9 @@ class ShiftsController < ApplicationController
   end
 
   def check_time(time)
-    return Time.zone.parse time
+    Time.zone.parse time
   rescue => error
-    flash[:alert] = 'Error: ' + error.message
-    render 'new'
+    render_error('Error: ' + error.message)
   end
 
   def check_location(place)
