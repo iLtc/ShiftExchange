@@ -1,6 +1,6 @@
 class ShiftsController < ApplicationController
-  before_action :load_current_user
-  # skip_before_action :verify_authenticity_token
+  # before_action :load_current_user
+  skip_before_action :verify_authenticity_token
 
   def new
     @available_locations = list_locations
@@ -18,13 +18,21 @@ class ShiftsController < ApplicationController
       location: 'Location'
     }
 
+    allowed_period = %w(breakfast lunch afternoon dinner)
+
     required_params.keys.each do |key|
-      return render_error(required_params[key] + ' should not be empty!') if params[key].nil?
+      if params[key].nil?
+        return render_error(required_params[key] + ' should not be empty!')
+      end
     end
 
     date = check_date params[:date]
     return unless date
     # TODO: Check if date in range
+
+    unless allowed_period.include? params[:period]
+      return render_error('Period is unknown!')
+    end
 
     start_time = check_time "#{date} #{params[:start]}"
     return render_error('Start Time should not be empty!') if start_time.nil?
