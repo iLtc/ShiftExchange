@@ -1,6 +1,6 @@
 class ShiftsController < ApplicationController
-  # before_action :load_current_user
-  skip_before_action :verify_authenticity_token
+  before_action :load_current_user
+  # skip_before_action :verify_authenticity_token
 
   def new
     @available_locations = list_locations
@@ -47,9 +47,8 @@ class ShiftsController < ApplicationController
       return render_error('Start Time should not later than End Time!')
     end
 
-
     location = check_location params[:location]
-    return if !location
+    return unless location
 
     result = check_permission start_time
     if params[:further].nil? && !result
