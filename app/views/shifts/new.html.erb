@@ -42,6 +42,13 @@
         <%= text_field_tag :location, params['location'], class: "form-control", required: true %>
       </div>
     </div>
+    <div class="form-group">
+      <%= label_tag :comment, "Comment", class: "col-sm-3 control-label" %>
+      <div class="col-sm-6">
+        <% comment_required = @further_info.nil? ? false : true %>
+        <%= text_area_tag :comment, params['comment'], class: "form-control", required: comment_required %>
+      </div>
+    </div>
   <% end %>
   <%= field_set_tag 'Further Information', class: @further_info.nil? ? 'hide' : '' do %>
     <div class="alert alert-danger" role="alert"><%= @further_info %> If you want to post this shift, please make a choice.</div>
@@ -57,7 +64,7 @@
         <div class="radio">
           <label>
             <%= radio_button_tag(:further, 'permission') %>
-            Request Permission - I have a special circumstance. I want to write down the reason and let a manager approves it.
+            Request Permission - I have a special circumstance. I want to write down the reason in the "Comment" field above and let a manager approves it.
             <b>If the manager declined my request, I will work for it.</b>
           </label>
         </div>
