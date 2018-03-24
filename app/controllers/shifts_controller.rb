@@ -50,10 +50,13 @@ class ShiftsController < ApplicationController
     location = check_location params[:location]
     return unless location
 
-    result = check_permission start_time
-    return render 'new' if params[:further].nil? && !result
+    result = check_permission start_time, params[:further], params[:comment]
+    return render 'new' unless result
 
     shift = Shift.new
+    shift.location = location
+    shift.shift_type = 123
+
     shift.start = start_time
     shift.end = end_time
     shift.from = @current_user
@@ -123,7 +126,15 @@ class ShiftsController < ApplicationController
     key_value.key
   end
 
-  def check_permission(start_time)
+  def check_permission(start_time, further, comment)
+    return true if further.equal? 'post'
+
+    if comment.nil?
+      flash[:alert] = 'Please fill a comment!'
+    else
+      return true
+    end
+
     @further_info = nil
 
     if @current_user.credits <= 0
