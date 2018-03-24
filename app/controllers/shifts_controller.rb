@@ -51,9 +51,7 @@ class ShiftsController < ApplicationController
     return unless location
 
     result = check_permission start_time
-    if params[:further].nil? && !result
-      return render_error(@further_info)
-    end
+    return render 'new' if params[:further].nil? && !result
 
     shift = Shift.new
     shift.start = start_time
@@ -126,12 +124,18 @@ class ShiftsController < ApplicationController
   end
 
   def check_permission(start_time)
+    @further_info = nil
+
     if @current_user.credits <= 0
-      @further_info = 'You do not have enough credits.'
+      @further_info = 'You do not have enough credits. '
     end
 
     if start_time < Time.now + 7.days
-      @further_info = 'Your Start Time is less than 7 days.'
+      @further_info = if @further_info.nil?
+                        'Your Start Time is less than 7 days. '
+                      else
+                        @further_info += 'Your Start Time is less than 7 days. '
+                      end
     end
 
     return true if @further_info.nil?
