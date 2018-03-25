@@ -45,8 +45,7 @@
     <div class="form-group">
       <%= label_tag :comment, "Comment", class: "col-sm-3 control-label" %>
       <div class="col-sm-6">
-        <% comment_required = @further_info.nil? ? false : true %>
-        <%= text_area_tag :comment, params['comment'], class: "form-control", required: comment_required %>
+        <%= text_area_tag :comment, params['comment'], class: "form-control" %>
       </div>
     </div>
   <% end %>

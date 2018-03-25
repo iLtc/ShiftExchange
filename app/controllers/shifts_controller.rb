@@ -127,14 +127,6 @@ class ShiftsController < ApplicationController
   end
 
   def check_permission(start_time, further, comment)
-    return true if further.equal? 'post'
-
-    if comment.nil?
-      flash[:alert] = 'Please fill a comment!'
-    else
-      return true
-    end
-
     @further_info = nil
 
     if @current_user.credits <= 0
@@ -151,6 +143,18 @@ class ShiftsController < ApplicationController
 
     return true if @further_info.nil?
 
+    return true if further == 'post'
+
+    if further == 'permission'
+      if comment.empty?
+        flash[:alert] = 'Please fill a comment!'
+        return false
+      else
+        return true
+      end
+    end
+
     false
+
   end
 end
