@@ -55,21 +55,33 @@ class ShiftsController < ApplicationController
 
     shift = Shift.new
     shift.location = location
-    shift.shift_type = 123
+    shift.shift_type = if params[:further] == 'permission'
+                         'permission'
+                       elsif params[:further] == 'post'
+                         'post'
+                       else
+                         'normal'
+                       end
 
-    shift.start = start_time
-    shift.end = end_time
-    shift.from = @current_user
-
-    shift.status = if result
-                     'approved'
-                   elsif params[:further] == 'post'
-                     'post'
-                   else
+    shift.status = if params[:further] == 'permission'
                      'pending'
+                   else
+                     'approved'
                    end
 
+    shift.date = date
+    shift.period = params[:period]
+    shift.start = start_time
+    shift.end = end_time
+
     shift.save
+
+    flash[:notice] = if shift.status == 'approved'
+                       'Your shift has been posted!'
+                     else
+                       'Your shift has been submitted! A manager will review it.'
+                     end
+    redirect_to shifts_path
   end
 
   private
