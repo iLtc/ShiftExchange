@@ -11,16 +11,20 @@
       <%= label_tag :period, "Period", class: "col-sm-3 control-label" %>
       <div class="col-sm-6">
         <label class="radio-inline">
-          <%= radio_button_tag(:period, 'breakfast', true) %> Breakfast
+          <% breakfast_checked = params['period'] == 'breakfast' ? true : false %>
+          <%= radio_button_tag :period, 'breakfast', breakfast_checked %> Breakfast
         </label>
         <label class="radio-inline">
-          <%= radio_button_tag(:period, 'lunch') %> Lunch
+          <% lunch_checked = params['period'] == 'lunch' ? true : false %>
+          <%= radio_button_tag :period, 'lunch', lunch_checked %> Lunch
         </label>
         <label class="radio-inline">
-          <%= radio_button_tag(:period, 'afternoon') %> Afternoon
+          <% afternoon_checked = params['period'] == 'afternoon' ? true : false %>
+          <%= radio_button_tag :period, 'afternoon', afternoon_checked %> Afternoon
         </label>
         <label class="radio-inline">
-          <%= radio_button_tag(:period, 'dinner') %> Dinner
+          <% dinner_checked = params['period'] == 'dinner' ? true : false %>
+          <%= radio_button_tag :period, 'dinner', dinner_checked %> Dinner
         </label>
       </div>
     </div>
@@ -56,13 +60,15 @@
       <div class="col-sm-9">
         <div class="radio">
           <label>
-            <%= radio_button_tag(:further, 'post') %>
+            <% post_checked = params['further'] == 'post' ? true : false %>
+            <%= radio_button_tag :further, 'post', post_checked %>
             Just Post - I want to post this shift. <b>If nobody picks it, I will work for it.</b>
           </label>
         </div>
         <div class="radio">
           <label>
-            <%= radio_button_tag(:further, 'permission') %>
+            <% permission_checked = params['further'] == 'permission' ? true : false %>
+            <%= radio_button_tag :further, 'permission', permission_checked %>
             Request Permission - I have a special circumstance. I want to write down the reason in the "Comment" field above and let a manager approves it.
             <b>If the manager declined my request, I will work for it.</b>
           </label>
