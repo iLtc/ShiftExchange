@@ -5,6 +5,10 @@
 window.shiftsController = () ->
   $("#user-menu").dropdown()
 
+window.shiftsIndex = () ->
+  shifts = $.parseJSON(shifts_json)
+  console.log(shifts)
+
 window.shiftsNew = () ->
   $("#date").datepicker {
     changeMonth: true,
@@ -23,6 +27,3 @@ window.shiftsNew = () ->
   $("#location").autocomplete {
     source: availableLocations
   }
-
-window.shiftsCreate = () ->
-  shiftsNew()
