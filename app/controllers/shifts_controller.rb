@@ -76,6 +76,13 @@ class ShiftsController < ApplicationController
 
     shift.save
 
+    shift_user = ShiftUser.new
+    shift_user.shift = shift
+    shift_user.user = @current_user
+    shift_user.role = 'poster'
+
+    shift_user.save
+
     flash[:notice] = if shift.status == 'approved'
                        'Your shift has been posted!'
                      else
