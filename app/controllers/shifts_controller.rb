@@ -2,6 +2,15 @@ class ShiftsController < ApplicationController
   before_action :load_current_user
   # skip_before_action :verify_authenticity_token
 
+  def index
+    @shifts = Shift.where('date >= ?', Date.today - 1)
+
+    respond_to do |format|
+      format.html { render 'index' }
+      format.json { render json: @shifts.to_json }
+    end
+  end
+
   def new
     @available_locations = list_locations
   end
