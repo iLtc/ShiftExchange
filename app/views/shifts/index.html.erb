@@ -4,61 +4,71 @@
     <thead>
     <tr>
       <th></th>
-      <th>Monday</th>
-      <th>Tuesday</th>
-      <th>Wednesday</th>
-      <th>Thursday</th>
-      <th>Friday</th>
-      <th>A Saturday</th>
-      <th>A Sunday</th>
-      <th>B Saturday</th>
-      <th>B Sunday</th>
+      <th>Breakfast</th>
+      <th>Lunch</th>
+      <th>Afternoon</th>
+      <th>Dinner</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <th>Breakfast</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <th>Monday</th>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th>Lunch</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <th>Tuesday</th>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th>Afternoon</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <th>Wednesday</th>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th>Dinner</th>
+      <th>Thursday</th>
       <td></td>
       <td></td>
       <td></td>
       <td></td>
+    </tr>
+    <tr>
+      <th>Friday</th>
       <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>A Saturday</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>A Sunday</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>B Saturday</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>B Sunday</th>
       <td></td>
       <td></td>
       <td></td>
@@ -68,5 +78,7 @@
   </table>
 </div>
 <script>
-  var shifts_json = '<%=@shifts.to_json.html_safe%>'
+  var shifts_json = '<%=@shifts.to_json.html_safe%>';
+  var ahifts_template = '<div class="list-group"><a href="__LINK__" class="list-group-item">__CONTENT__</a></div>';
+  var shifts_link = '<%=shifts_path%>'
 </script>
