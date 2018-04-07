@@ -17,3 +17,5 @@ ready = ->
     console.log e.message
 
 $(document).on('turbolinks:load', ready)
+
+window.weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
