@@ -2,8 +2,10 @@ class ShiftsController < ApplicationController
   before_action :load_current_user
   # skip_before_action :verify_authenticity_token
 
+  include ApplicationConcern
+
   def index
-    @shifts = Shift.where('date >= ?', Date.today - 1)
+    @shifts = Shift.where('date >= ?', Date.today)
 
     respond_to do |format|
       format.html { render 'index' }
