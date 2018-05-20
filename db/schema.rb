@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 20180330170706) do
   end
 
   create_table "shifts", force: :cascade do |t|
+    t.string "start"
+    t.string "end"
     t.string "location"
     t.string "shift_type"
     t.string "status"
@@ -74,8 +76,6 @@ ActiveRecord::Schema.define(version: 20180330170706) do
     t.datetime "updated_at", null: false
     t.date "date"
     t.string "period"
-    t.string "end"
-    t.string "start"
   end
 
   create_table "users", force: :cascade do |t|
