@@ -1,13 +1,11 @@
 class ShiftsController < ApplicationController
   before_action :load_current_user
-  # skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
 
   include ApplicationConcern
 
   def index
     @shifts = Shift.where('date >= ?', Date.today).group_by(&:date).sort().to_h
-
-    puts @shifts
 
     respond_to do |format|
       format.html { render 'index' }
@@ -102,6 +100,26 @@ class ShiftsController < ApplicationController
                        'Your shift has been submitted! A manager will review it.'
                      end
     redirect_to shifts_path
+  end
+
+  def show
+    begin
+      @shift = Shift.find(params[:id])
+
+    rescue
+      respond_to do |format|
+        format.html { render 'not_found' }
+        format.json {
+          render json: {error: 'Shift Not Found'}.to_json
+        }
+      end
+
+    else
+      respond_to do |format|
+        format.html { render 'show' }
+        format.json { render json: @shift.to_json }
+      end
+    end
   end
 
   private
