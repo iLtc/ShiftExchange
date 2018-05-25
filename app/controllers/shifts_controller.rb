@@ -5,7 +5,9 @@ class ShiftsController < ApplicationController
   include ApplicationConcern
 
   def index
-    @shifts = Shift.where('date >= ?', Date.today)
+    @shifts = Shift.where('date >= ?', Date.today).group_by(&:date).sort().to_h
+
+    puts @shifts
 
     respond_to do |format|
       format.html { render 'index' }

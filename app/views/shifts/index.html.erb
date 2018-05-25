@@ -1,84 +1,23 @@
 <% content_for :title do %>All Shifts<% end %>
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th></th>
-      <th>Breakfast</th>
-      <th>Lunch</th>
-      <th>Afternoon</th>
-      <th>Dinner</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th>Monday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Tuesday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Wednesday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Thursday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Friday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>A Saturday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>A Sunday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>B Saturday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>B Sunday</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-<script>
-  var shifts_json = '<%=@shifts.to_json.html_safe%>';
-  var ahifts_template = '<div class="list-group"><a href="__LINK__" class="list-group-item">__CONTENT__</a></div>';
-  var shifts_link = '<%=shifts_path%>'
-</script>
+
+<% @shifts.each do |date, shifts| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <%= date.strftime('%A, %B %e, %Y') %>
+      </h3>
+    </div>
+    <ul class="list-group">
+      <% shifts.each do |shift| %>
+        <li class="list-group-item">
+          <a href="<%= shift_path(shift) %>">
+            <%= Time.parse(shift.start).strftime('%l:%M %P') %>
+            -
+            <%= Time.parse(shift.end).strftime('%l:%M %P') %>:
+            <%= shift.location.split.map(&:capitalize).join(' ') %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
