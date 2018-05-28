@@ -2,7 +2,8 @@ class User < ApplicationRecord
   has_many :login_credentials
   has_and_belongs_to_many :roles
   has_many :permissions, through: :roles
-  has_and_belongs_to_many :shifts
+  has_many :sent_shifts, class_name: 'Shift', foreign_key: 'sender_id'
+  has_many :received_shifts, class_name: 'Shift', foreign_key: 'receiver_id'
 
   def show_name
     if prefer_name
