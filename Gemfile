@@ -45,6 +45,10 @@ group :development, :test do
   gem 'sqlite3'
 
   gem 'seed_dump'
+
+  gem 'rspec-rails', '~> 3.6.0'
+
+  gem 'spring-commands-rspec'
 end
 
 group :development do
