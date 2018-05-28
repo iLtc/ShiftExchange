@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180528200513) do
+ActiveRecord::Schema.define(version: 20180528200514) do
 
   create_table "key_values", force: :cascade do |t|
     t.string "key"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 20180528200513) do
     t.string "period"
     t.integer "sender_id"
     t.integer "receiver_id"
+    t.integer "approver_id"
+    t.index ["approver_id"], name: "index_shifts_on_approver_id"
     t.index ["receiver_id"], name: "index_shifts_on_receiver_id"
     t.index ["sender_id"], name: "index_shifts_on_sender_id"
   end
