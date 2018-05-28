@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180330170706) do
+ActiveRecord::Schema.define(version: 20180528191251) do
 
   create_table "key_values", force: :cascade do |t|
     t.string "key"
@@ -56,16 +56,6 @@ ActiveRecord::Schema.define(version: 20180330170706) do
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
-  create_table "shift_users", force: :cascade do |t|
-    t.integer "shift_id"
-    t.integer "user_id"
-    t.string "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["shift_id"], name: "index_shift_users_on_shift_id"
-    t.index ["user_id"], name: "index_shift_users_on_user_id"
-  end
-
   create_table "shifts", force: :cascade do |t|
     t.string "start"
     t.string "end"
@@ -76,6 +66,16 @@ ActiveRecord::Schema.define(version: 20180330170706) do
     t.datetime "updated_at", null: false
     t.date "date"
     t.string "period"
+  end
+
+  create_table "shifts_users", force: :cascade do |t|
+    t.integer "shift_id"
+    t.integer "user_id"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shift_id"], name: "index_shifts_users_on_shift_id"
+    t.index ["user_id"], name: "index_shifts_users_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
