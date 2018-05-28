@@ -1,6 +1,6 @@
 class ShiftsController < ApplicationController
   before_action :load_current_user
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
 
   include ApplicationConcern
 
