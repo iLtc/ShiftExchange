@@ -85,14 +85,23 @@ class ShiftsController < ApplicationController
     shift.start = start_time
     shift.end = end_time
 
+    shift.sender = @current_user
+
+    shift.approver = if params[:further] == 'permission'
+                       nil
+                     elsif params[:further] == 'post'
+                       nil
+                     else
+                       User::system_robot
+                     end
+
     shift.save
 
-    shift_user = ShiftUser.new
-    shift_user.shift = shift
-    shift_user.user = @current_user
-    shift_user.role = 'poster'
+    if params[:comment]
+      add_comment(@current_user, params[:comment], shift)
+    end
 
-    shift_user.save
+    add_log(@current_user, 'post_shift', shift)
 
     flash[:notice] = if shift.status == 'approved'
                        'Your shift has been posted!'

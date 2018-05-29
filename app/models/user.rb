@@ -21,4 +21,8 @@ class User < ApplicationRecord
 
     "#{first} #{last}"
   end
+
+  def self.system_robot
+    Role.where(title: 'Robot').first.users.first
+  end
 end
