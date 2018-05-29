@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180528200514) do
+ActiveRecord::Schema.define(version: 20180529002513) do
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "content"
+    t.string "target_type"
+    t.integer "target_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "key_values", force: :cascade do |t|
     t.string "key"
@@ -28,6 +38,17 @@ ActiveRecord::Schema.define(version: 20180528200514) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_login_credentials_on_user_id"
+  end
+
+  create_table "logs", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "action"
+    t.string "target_type"
+    t.integer "target_id"
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
   create_table "permissions", force: :cascade do |t|
