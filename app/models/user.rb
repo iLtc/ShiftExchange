@@ -7,10 +7,18 @@ class User < ApplicationRecord
   has_many :approved_shifts, class_name: 'Shift', foreign_key: 'approver_id'
 
   def show_name
-    if prefer_name
-      "#{prefer_name} #{last_name[0]}."
-    else
-      "#{first_name} #{last_name[0]}."
+    first = first_name
+    last = last_name
+    prefer = prefer_name
+
+    if prefer
+      first = prefer
     end
+
+    if last
+      last = last[0] + '.'
+    end
+
+    "#{first} #{last}"
   end
 end
